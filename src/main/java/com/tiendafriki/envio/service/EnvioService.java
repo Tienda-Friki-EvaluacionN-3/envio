@@ -25,7 +25,7 @@ public class EnvioService {
 
     public String guardar(Envio envio) {
         repository.save(envio);
-        return "[+] El pedido fue agregado correctamente";
+        return "[+] El Envio fue agregado correctamente";
     }
 
     public String actualizar(Envio envio) {
@@ -33,10 +33,10 @@ public class EnvioService {
         for (Envio p : lista) {
             if (p.getId().equals(envio.getId())) {
                 repository.save(envio);
-                return "[+] El pedido fue actualizado correctamente";
+                return "[+] El Envio fue actualizado correctamente";
             }
         }
-        return "[+] El pedido no fue encontrado";
+        return "[+] El Envio no fue encontrado";
 
     }
 
@@ -45,10 +45,10 @@ public class EnvioService {
         for (Envio p : lista) {
             if (p.getId().equals(id)) {
                 repository.deleteById(id);
-                return "[+] El pedido fue eliminado correctamente";
+                return "[+] El Envio fue eliminado correctamente";
             }
 
         }
-        return "[+] El pedido no fue encontrado";
+        return "[+] El Envio no fue encontrado";
     }
 }

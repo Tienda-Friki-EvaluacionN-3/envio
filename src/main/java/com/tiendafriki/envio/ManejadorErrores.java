@@ -2,7 +2,6 @@ package com.tiendafriki.envio;
 
 import com.tiendafriki.envio.dto.ErrorDTO;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;

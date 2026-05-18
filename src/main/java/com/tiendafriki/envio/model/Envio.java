@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.*;
-import java.util.List;
 
 @Entity
 @Table(name = "envio")
@@ -25,7 +24,7 @@ public class Envio {
     private String tipo;
 
     @Pattern(regexp = "(?i)Pendiente|Preparacion|Enviado|Cancelado", message = "[+] El Tipo debe ser Pendiente, Preparacion, Enviado o Cancelado")
-    @NotBlank(message = "[+] El tipo no puede estar vacio...")
+    @NotBlank(message = "[+] El estado no puede estar vacio...")
     private String estado;
 
 }
