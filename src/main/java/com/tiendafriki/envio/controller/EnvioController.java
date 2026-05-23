@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tiendafriki.envio.dto.EstadoEnvioDTO;
 import com.tiendafriki.envio.model.Envio;
 import com.tiendafriki.envio.service.EnvioService;
 
@@ -37,8 +38,18 @@ public class EnvioController {
     }
 
     @GetMapping("/buscarId/{id}")
-    public Optional<Envio> buscarPorId(@PathVariable Integer id) {
+    public Envio buscarPorId(@PathVariable Integer id) {
         return service.buscarPorId(id);
+    }
+
+    // NUEVO:
+
+    // === GET: BUSCAR POR ID DE PEDIDO === //
+
+    @GetMapping("/buscarPedido/{pedidoId}")
+    public Envio buscarPorPedido(@PathVariable Integer pedidoId) {
+
+        return service.buscarPorPedido(pedidoId);
     }
 
     @PostMapping("/agregar")
@@ -47,9 +58,9 @@ public class EnvioController {
         return ResponseEntity.status(201).body(mensaje);
     }
 
-    @PutMapping("/actualizar")
-    public ResponseEntity<String> actualizar(@Valid @RequestBody Envio envio) {
-        String mensaje = service.actualizar(envio);
+    @PutMapping("/actualizarEstado/{id}")
+    public ResponseEntity<String> actualizar(@PathVariable Integer id, @Valid @RequestBody EstadoEnvioDTO dto) {
+        String mensaje = service.actualizarEstado(id, dto);
         return ResponseEntity.status(200).body(mensaje);
     }
 

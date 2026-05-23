@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DataLoader {
 
+        // Por ahora dejaremos desahabilitado el Dataloader para las pruebas de integración
+
+/* 
+
     @Bean
     CommandLineRunner init(EnvioRepository envioRepository) {
         return args -> {
@@ -47,5 +51,7 @@ public class DataLoader {
             }
         };
     }
+
+    */
 
 }

@@ -17,14 +17,12 @@ public class Envio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Integer pedidoId;
+
     // @Pattern(regexp = "(?i)Pedido|devolucion", message = "[+] El Tipo debe ser
     // Pendiente, Enviado, Cancelado o Reservado...")
-    // en veremos todavia
-    @NotBlank(message = "[+] El tipo no puede estar vacio...")
-    private String tipo;
 
     @Pattern(regexp = "(?i)Pendiente|Preparacion|Enviado|Cancelado", message = "[+] El Tipo debe ser Pendiente, Preparacion, Enviado o Cancelado")
-    @NotBlank(message = "[+] El estado no puede estar vacio...")
     private String estado;
 
 }
