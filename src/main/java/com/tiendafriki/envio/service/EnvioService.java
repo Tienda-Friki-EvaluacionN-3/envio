@@ -19,14 +19,10 @@ public class EnvioService {
     @Autowired
     private EnvioRepository repository;
 
-    // === (GET) LISTAR === //
-
     public List<Envio> listar() {
 
         return repository.findAll();
     }
-
-    // === (GET) BUSCAR POR ID === //
 
     public Envio buscarPorId(Integer id) {
 
@@ -40,8 +36,6 @@ public class EnvioService {
                 );
     }
 
-    // === (GET) BUSCAR POR PEDIDO === //
-
     public Envio buscarPorPedido(Integer pedidoId) {
 
         return repository.findByPedidoId(pedidoId)
@@ -53,8 +47,6 @@ public class EnvioService {
                         )
                 );
     }
-
-    // === FUNCION PARA VALIDAR PEDIDO === //
 
     private Pedido validarPedido(Integer pedidoId) {
 
@@ -86,16 +78,10 @@ public class EnvioService {
         }
     }
 
-    // === (POST) GUARDAR === //
-
     public String guardar(Envio envio) {
-
-        // Validar pedido existente
 
         Pedido pedido =
                 validarPedido(envio.getPedidoId());
-
-        // Validar estado PAGADO
 
         if (!pedido.getEstado().equalsIgnoreCase("Pagado")) {
 
@@ -103,8 +89,6 @@ public class EnvioService {
                     "[ERROR] El pedido debe estar PAGADO para crear un envio [X_X] ..."
             );
         }
-
-        // Validar que no exista un envio activo
 
         Optional<Envio> envioExistente =
                 repository.findByPedidoIdAndEstadoIn(
@@ -123,17 +107,12 @@ public class EnvioService {
             );
         }
 
-        // Estado automático inicial
-
         envio.setEstado("Pendiente");
 
         repository.save(envio);
 
         return "[+] El envio fue agregado correctamente";
     }
-
-
-    // === (PUT) ACTUALIZAR ESTADO === //
 
     public String actualizarEstado(Integer id,EstadoEnvioDTO dto) {
 
@@ -152,12 +131,8 @@ public class EnvioService {
         String estadoActual =
                 envio.getEstado();
 
-        // Obtener nuevo estado desde DTO
-
         String nuevoEstado =
                 dto.getEstado();
-
-        // === CONTROL DE FLUJO === //
 
         if (estadoActual.equalsIgnoreCase("Cancelado")) {
 
@@ -166,15 +141,11 @@ public class EnvioService {
             );
         }
 
-        // Pendiente -> Preparacion
-
         if (estadoActual.equalsIgnoreCase("Pendiente")
                 && nuevoEstado.equalsIgnoreCase("Preparacion")) {
 
             envio.setEstado("Preparacion");
         }
-
-        // Preparacion -> Enviado
 
         else if (estadoActual.equalsIgnoreCase("Preparacion")
                 && nuevoEstado.equalsIgnoreCase("Enviado")) {
@@ -182,15 +153,11 @@ public class EnvioService {
             envio.setEstado("Enviado");
         }
 
-        // Pendiente -> Cancelado
-
         else if (estadoActual.equalsIgnoreCase("Pendiente")
                 && nuevoEstado.equalsIgnoreCase("Cancelado")) {
 
             envio.setEstado("Cancelado");
         }
-
-        // Preparacion -> Cancelado
 
         else if (estadoActual.equalsIgnoreCase("Preparacion")
                 && nuevoEstado.equalsIgnoreCase("Cancelado")) {
@@ -209,8 +176,6 @@ public class EnvioService {
 
         return "[+] Estado del envio actualizado correctamente";
     }
-
-    // === (DELETE) ELIMINAR === //
 
     public String eliminar(Integer id) {
 
@@ -231,55 +196,3 @@ public class EnvioService {
 
     
 }
-
-
-/*
-
-// ===  (GET) LISTAR === //
-
-    public List<Envio> listar() {
-        return repository.findAll();
-    }
-
-    // ===  (GET) BUSCAR POR ID === //
-
-    public Optional<Envio> buscarPorId(Integer id) {
-        return repository.findById(id);
-    }
-
-    // ===  (POST) GUARDAR === //
-
-    public String guardar(Envio envio) {
-        repository.save(envio);
-        return "[+] El Envio fue agregado correctamente";
-    }
-
-    // ===  (PUT) ACTUALIZAR  === //
-
-    public String actualizar(Envio envio) {
-        
-        List<Envio> lista = repository.findAll();
-        for (Envio p : lista) {
-            if (p.getId().equals(envio.getId())) {
-                repository.save(envio);
-                return "[+] El Envio fue actualizado correctamente";
-            }
-        }
-        return "[+] El Envio no fue encontrado";
-
-    }
-
-    public String eliminar(Integer id) {
-        List<Envio> lista = repository.findAll();
-        for (Envio p : lista) {
-            if (p.getId().equals(id)) {
-                repository.deleteById(id);
-                return "[+] El Envio fue eliminado correctamente";
-            }
-
-        }
-        return "[+] El Envio no fue encontrado";
-    }
-
-
-*/

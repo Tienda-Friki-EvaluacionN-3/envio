@@ -19,9 +19,6 @@ public class Envio {
 
     private Integer pedidoId;
 
-    // @Pattern(regexp = "(?i)Pedido|devolucion", message = "[+] El Tipo debe ser
-    // Pendiente, Enviado, Cancelado o Reservado...")
-
     @Pattern(regexp = "(?i)Pendiente|Preparacion|Enviado|Cancelado", message = "[+] El Tipo debe ser Pendiente, Preparacion, Enviado o Cancelado")
     private String estado;
 
