@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tiendafriki.envio.dto.EnvioRequestDTO;
 import com.tiendafriki.envio.dto.EstadoEnvioDTO;
 import com.tiendafriki.envio.model.Envio;
 import com.tiendafriki.envio.service.EnvioService;
@@ -76,17 +77,17 @@ public class EnvioController {
     })
 
     @PostMapping("/agregar")
-    public ResponseEntity<String> crearPedido(@Valid @RequestBody Envio envio) {
+    public ResponseEntity<String> crearPedido(@Valid @RequestBody EnvioRequestDTO envio) {
         String mensaje = service.guardar(envio);
         return ResponseEntity.status(201).body(mensaje);
     }
 
-    @Operation(summary = "Actualizar estado del envío", description = "Permite modificar el estado de un envío registrado")
+    @Operation(summary = "Actualizar estado del envío", description = "Permite modificar el estado de un envío registrado. Estados: Pendiente|Preparacion|Enviado|Cancelado")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Estado actualizado correctamente"),
             @ApiResponse(responseCode = "400", description = "Datos inválidos"),
             @ApiResponse(responseCode = "404", description = "Envío no encontrado"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor o de comunicación entre microservicios")
     })
 
     @PutMapping("/actualizarEstado/{id}")

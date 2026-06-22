@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.tiendafriki.envio.dto.EnvioRequestDTO;
 import com.tiendafriki.envio.dto.EstadoEnvioDTO;
 import com.tiendafriki.envio.model.Envio;
 import com.tiendafriki.envio.model.Pedido;
@@ -78,7 +79,7 @@ public class EnvioService {
         }
     }
 
-    public String guardar(Envio envio) {
+    public String guardar(EnvioRequestDTO envio) {
 
         Pedido pedido =
                 validarPedido(envio.getPedidoId());
@@ -107,9 +108,13 @@ public class EnvioService {
             );
         }
 
-        envio.setEstado("Pendiente");
+        Envio env = new Envio();
 
-        repository.save(envio);
+        env.setPedidoId(envio.getPedidoId());
+
+        env.setEstado("Pendiente");
+
+        repository.save(env);
 
         return "[+] El envio fue agregado correctamente";
     }
